@@ -25,20 +25,19 @@ app.delete('/api/notes/:id', (req, res)=>{
     res.end()
 })
 
-idCount = 1;
+
 app.post('/api/notes', (req, res) => {
 
     fs.readFile('./db/db.json', (err, data)=>{
         if (err) throw err;
         const json = JSON.parse(data);
         const newNoteObj = req.body;
-        newNoteObj.id = idCount;
+        newNoteObj.id = Math.floor(Math.random() * 1000)
         json.push(req.body);
         fs.writeFile('./db/db.json', JSON.stringify(json), (err, data)=>{
             if(err) throw err
         })
     })
-    idCount++;
     res.end();
 });
 
